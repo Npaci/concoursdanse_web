@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Concours Danses</title>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css} "/>
+</head>
+<body>
+    <h1>Liste de concours</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Thème</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="conc : ${concours}">
+                <tr>
+                    <td th:utext="${conc.id_Concour}">?</td>
+                    <td th:utext="${conc.theme}">?</td>
+                    <td th:utext="${conc.description}">?</td>
+                    <td class="noBorder">
+                        <div>
+                            <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Modifier</a>
+                            <a type="button" class="btn btn-danger" th:href="@{/concours/delete/{id}(id=${conc.id_Concour})}">Supprimer</a>
+
+                        </div>
+                    </td>
+                </tr>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modification du concours</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" th:action="@{/concours/edit/{id}(id=${conc.id_Concour})}" th:object="${conc}">
+                                    <div class="form-group">
+                                        <label for="theme" class="col-form-label">Theme</label>
+                                        <input type="text" class="form-control" name="theme" id="theme">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="descr" class="col-form-label">Description</label>
+                                        <textarea class="form-control" name="description" id="descr"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                        <button type="submit" class="btn btn-primary">Confirmer</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </tbody>
+    </table>
+
+    <a type="button" class="btn btn-info" th:href="@{/concours/create}">Nouveau</a>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
